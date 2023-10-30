@@ -10,11 +10,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function UserMenu() {
-  
+  const router = useRouter();
+
   const handleSignOut = async () => {
     const res = await signOut();
+    router.replace("/");
   };
 
   return (
@@ -31,7 +34,13 @@ export function UserMenu() {
         <DropdownMenuItem>
           <Link href="/dashboard/profile">Profile</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={()=>{handleSignOut()}}>Logout</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            handleSignOut();
+          }}
+        >
+          Logout
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
