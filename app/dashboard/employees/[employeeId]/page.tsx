@@ -2,8 +2,10 @@ import React from "react";
 import { EmployeeForm } from "./components/employee-form";
 import Employee from "@/models/employee.model";
 import Department from "@/models/department.model";
+import { connectToDB } from "@/lib/mongoose";
 
 const page = async ({ params }: { params: { employeeId: string } }) => {
+  connectToDB()
   let formattedEmployee = null;
 
   if (params.employeeId !== "new") {
@@ -28,7 +30,6 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
         : "",
     };
   }
-
   const supervisors = await Employee.find({});
   const formattedSupervisors = supervisors.map((supervisor) => ({
     id: supervisor._id.toString(),
@@ -39,6 +40,7 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
     id: department._id.toString(),
     name: department.DepartmentName,
   }));
+
 
   // console.log(formattedEmployee);
   // console.log(formatteddepartments);

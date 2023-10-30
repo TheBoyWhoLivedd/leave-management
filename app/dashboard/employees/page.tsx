@@ -1,4 +1,3 @@
-import React from "react";
 import { EmployeesClient } from "./components/client";
 import { connectToDB } from "@/lib/mongoose";
 import Employee from "@/models/employee.model";

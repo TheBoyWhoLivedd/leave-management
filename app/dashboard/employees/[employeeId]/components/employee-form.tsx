@@ -1,5 +1,4 @@
 "use client";
-
 import * as z from "zod";
 import axios from "axios";
 import { useState } from "react";
@@ -23,7 +22,6 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -198,7 +196,6 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: `Error: ${errorMessage}`,
-        // action: <ToastAction altText="Goto schedule to undo">Retry</ToastAction>,
       });
     } finally {
       setLoading(false);
