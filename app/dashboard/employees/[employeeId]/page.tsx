@@ -5,7 +5,7 @@ import Department from "@/models/department.model";
 import { connectToDB } from "@/lib/mongoose";
 
 const page = async ({ params }: { params: { employeeId: string } }) => {
-  connectToDB()
+  await connectToDB()
   let formattedEmployee = null;
 
   if (params.employeeId !== "new") {

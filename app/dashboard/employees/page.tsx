@@ -4,7 +4,7 @@ import Employee from "@/models/employee.model";
 import { EmployeeColumn } from "./components/columns";
 
 const Employees = async () => {
-  connectToDB();
+  await connectToDB();
   const employees = await Employee.find();
   // console.log(employees);
 
