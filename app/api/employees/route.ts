@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
     connectToDB();
     const createdEmployee = await Employee.create(body);
-    revalidatePath("/dashboard");
+    revalidatePath("/dashboard/employees");
     return NextResponse.json({
       employee: createdEmployee.FirstName,
       revalidated: true,
