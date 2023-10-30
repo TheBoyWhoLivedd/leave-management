@@ -1,14 +1,20 @@
 "use client";
 
 import * as z from "zod";
-// import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
 import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-// import { toast } from "react-hot-toast";
 import { useToast } from "@/components/ui/use-toast";
-import { CaretSortIcon, CheckIcon, TrashIcon } from "@radix-ui/react-icons";
+import {
+  CaretSortIcon,
+  CheckIcon,
+  ImageIcon,
+  Pencil1Icon,
+  PlusCircledIcon,
+  TrashIcon,
+} from "@radix-ui/react-icons";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -46,11 +52,12 @@ import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
 import Image from "next/image";
-import { defaultAvatarImg } from "@/lib/defaultImage";
 import { cn } from "@/lib/utils";
+import { FileUpload } from "@/components/file-upload";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
-  Image: z.string({ required_error: "Image URL cannot be empty" }),
+  Image: z.string().optional(),
   DepartmentId: z.string().min(1),
   FirstName: z
     .string()
@@ -61,7 +68,7 @@ const formSchema = z.object({
   Gender: z.union([z.literal("Male"), z.literal("Female")], {
     required_error: "Gender is required",
   }),
-  Password: z.string().min(1),
+  Password: z.string().optional(),
   Roles: z.union([
     z.literal("COMMISSIONER_GENERAL"),
     z.literal("COMMISSIONER"),
@@ -71,12 +78,12 @@ const formSchema = z.object({
     z.literal("OFFICER"),
   ]),
   DateOfBirth: z.date({ required_error: "Please select a Date of Birth." }),
-  SupervisorId: z.string({
+  DirectSupervisor: z.string({
     required_error: "Please select a Supervisor.",
   }),
-  // Address: z.string({
-  //   required_error: "Address is required",
-  // }),
+  Address: z.string({
+    required_error: "Address is required",
+  }),
   Phone: z
     .string({ required_error: "Phone number is required" })
     .regex(/^0\d{9}$/, { message: "Phone number format is invalid" }),
@@ -104,6 +111,8 @@ export interface Employee {
   Email: string;
   Roles: Roles;
   Image: string;
+  DepartmentId: string;
+  DirectSupervisor: string;
 }
 export type Department = {
   id: string;
@@ -130,8 +139,12 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedSupervisorName, setSelectedSupervisorName] = useState("");
-  let [PreviewImg, SetPreviewImg] = useState(defaultAvatarImg);
+  const [isEditing, setIsEditing] = useState(false);
+  const toggleEdit = () => setIsEditing((current) => !current);
+  const [selectedSupervisorName, setSelectedSupervisorName] = useState(
+    initialData?.DirectSupervisor || ""
+  );
+  let [PreviewImg, SetPreviewImg] = useState("");
 
   const title = initialData ? "Edit Employee" : "Add Employee";
   const description = initialData ? "Edit an employee." : "Add a new employee";
@@ -163,15 +176,16 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        // await axios.patch(`/api/employees/${params.partnerId}`, data);
+        await axios.patch(`/api/employees/${params.employeeId}`, data);
       } else {
-        // await axios.post(`/api/employees`, {
-        //   ...data,
-        //   path: pathname,
-        // });
+        console.log(data);
+        await axios.post(`/api/employees`, {
+          ...data,
+          path: pathname,
+        });
       }
       router.refresh();
-      router.push(`/employees`);
+      router.push(`/dashboard/employees`);
       toast({
         title: "Success",
         description: toastMessage,
@@ -241,26 +255,76 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
-          <Image
-            //@ts-ignore
-            src={(PreviewImg as string) || initialData?.Image}
-            alt="EmployeeAvatar"
-            width={60}
-            height={60}
-          />
-          <FormField
-            control={form.control}
-            name="Image"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  <Input id="picture" type="file" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="md:grid md:grid-cols-3 gap-8">
+            <FormField
+              control={form.control}
+              name="Image"
+              render={({ field }) => (
+                <FormItem>
+                  {/* <FormLabel>Image</FormLabel> */}
+                  <FormControl>
+                    <div className="mt-6 border rounded-md p-4 ">
+                      <div className="font-medium flex items-center justify-between">
+                        Employee Image
+                        <Button
+                          type="button"
+                          onClick={toggleEdit}
+                          variant="ghost"
+                        >
+                          {isEditing && <>Cancel</>}
+                          {!isEditing && !initialData?.Image && (
+                            <>
+                              <PlusCircledIcon className="h-4 w-4 mr-2" />
+                              Add an image
+                            </>
+                          )}
+                          {!isEditing && initialData?.Image && (
+                            <>
+                              <Pencil1Icon className="h-4 w-4 mr-2" />
+                              Edit image
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                      {!isEditing &&
+                        (!initialData?.Image && PreviewImg === "" ? (
+                          <div className="flex items-center justify-center h-60 rounded-md">
+                            <ImageIcon className="h-10 w-10 text-slate-500" />
+                          </div>
+                        ) : (
+                          <div className="relative aspect-video mt-2">
+                            <Image
+                              alt="Upload"
+                              fill
+                              className=" rounded-md"
+                              src={PreviewImg || (initialData?.Image as string)}
+                            />
+                          </div>
+                        ))}
+                      {isEditing && (
+                        <div>
+                          <FileUpload
+                            endpoint="imageUploader"
+                            onChange={(url) => {
+                              if (url) {
+                                SetPreviewImg(url);
+                                field.onChange(url);
+                                toggleEdit();
+                              }
+                            }}
+                          />
+                          <div className="text-xs text-muted-foreground mt-4">
+                            16:9 aspect ratio recommended
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
@@ -396,24 +460,26 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="Password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Default Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      disabled={loading}
-                      placeholder="Default Password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {!initialData && (
+              <FormField
+                control={form.control}
+                name="Password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Default Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        disabled={loading}
+                        placeholder="Default Password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               control={form.control}
               name="Roles"
@@ -495,7 +561,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="SupervisorId"
+              name="DirectSupervisor"
               render={({ field }) => {
                 return (
                   <>
@@ -532,7 +598,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
                                   key={supervisor.id}
                                   onSelect={() => {
                                     form.setValue(
-                                      "SupervisorId",
+                                      "DirectSupervisor",
                                       supervisor.id,
                                       { shouldValidate: true }
                                     );
@@ -544,7 +610,12 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
                                   <CheckIcon
                                     className={cn(
                                       "ml-auto h-4 w-4",
-                                      supervisor.id == field.value
+                                      (
+                                        initialData
+                                          ? supervisor.name ===
+                                            selectedSupervisorName
+                                          : supervisor.id == field.value
+                                      )
                                         ? "opacity-100"
                                         : "opacity-0"
                                     )}
@@ -560,6 +631,23 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
                   </>
                 );
               }}
+            />
+            <FormField
+              control={form.control}
+              name="Address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={loading}
+                      placeholder="Plot 14 Nakawa"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
           <Button disabled={loading} className="ml-auto" type="submit">

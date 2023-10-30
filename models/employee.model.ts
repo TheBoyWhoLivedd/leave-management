@@ -66,11 +66,15 @@ const EmployeesSchema = new Schema(
     DirectSupervisor: {
       type: Schema.Types.ObjectId,
       ref: "Employee",
-      default: null,
+      required: true,
     },
     Image: {
       type: String,
-      required: true,
+      // required: true,
+      default:
+        "https://utfs.io/f/5ed9e2a9-c721-4dd4-82ef-46dc95285c7b-i6dkif.png",
+      // default:
+      //   "https://utfs.io/f/089d09c7-d47a-4717-95ac-d3c2230d6453-onns64.398846901526138291331.png",
     },
     password_reset_token: {
       required: false,
@@ -85,6 +89,10 @@ const EmployeesSchema = new Schema(
     magic_link_sent_at: {
       required: false,
       type: Schema.Types.Date,
+    },
+    hasAdminRights: {
+      type: Boolean,
+      default: false,
     },
   },
 

@@ -87,7 +87,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <CopyIcon className="mr-2 h-4 w-4" /> Copy Id
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => router.push(`/admin/partners/${data.id}`)}
+            onClick={() => router.push(`/dashboard/employees/${data.id}`)}
           >
             <Pencil2Icon className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>

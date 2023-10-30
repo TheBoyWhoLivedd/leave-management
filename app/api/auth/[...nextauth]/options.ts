@@ -16,6 +16,7 @@ export type CustomUser = {
   email?: string | null;
   role?: string | null;
   avatar?: string | null;
+  isAdmin?: boolean;
 };
 
 export const authOptions: AuthOptions = {
@@ -79,6 +80,7 @@ export const authOptions: AuthOptions = {
             name: `${user.FirstName} ${user.LastName}`,
             role: user.Roles,
             email: user.Email,
+            isAdmin: user.hasAdminRights,
           };
         } catch (error) {
           console.log("Error: ", error);
