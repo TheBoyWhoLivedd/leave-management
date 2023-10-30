@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { CustomSession, authOptions } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -40,7 +41,7 @@ export async function POST(req: Request) {
 
     connectToDB();
     const createdEmployee = await Employee.create(body);
-
+    revalidatePath("/dashboard");
     return NextResponse.json({
       employee: createdEmployee.FirstName,
       revalidated: true,
