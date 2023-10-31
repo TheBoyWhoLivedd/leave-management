@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
   }
 
   const salt = bcrypt.genSaltSync(10);
-  user.password = bcrypt.hashSync(payload.password, salt);
+  user.Password = bcrypt.hashSync(payload.password, salt);
   user.password_reset_token = null;
   await user.save();
 

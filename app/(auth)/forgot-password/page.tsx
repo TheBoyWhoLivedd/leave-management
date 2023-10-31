@@ -50,7 +50,7 @@ export default function ForgotPassword() {
               <label className="block">Email</label>
               <Input
                 type="email"
-                placeholder="tushar@gmail.com"
+                placeholder="ayesigwar@gmail.com"
                 className="w-full h-10 p-2 border rounded-md outline-red-400"
                 onChange={(event) => setEmail(event.target.value)}
               />
