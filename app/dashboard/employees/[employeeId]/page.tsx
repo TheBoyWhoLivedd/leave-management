@@ -1,11 +1,21 @@
+export const dynamic = 'force-dynamic'
 import React from "react";
 import { EmployeeForm } from "./components/employee-form";
 import Employee from "@/models/employee.model";
 import Department from "@/models/department.model";
 import { connectToDB } from "@/lib/mongoose";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { redirect } from "next/navigation";
 
 const page = async ({ params }: { params: { employeeId: string } }) => {
-  await connectToDB()
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/api/auth/signin?callbackUrl=/server");
+  }
+
+  await connectToDB();
   let formattedEmployee = null;
 
   if (params.employeeId !== "new") {
@@ -18,7 +28,7 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
       FirstName: employee.FirstName,
       LastName: employee.LastName,
       Gender: employee.Gender,
-      DateOfBirth: new Date (employee.DateOfBirth),
+      DateOfBirth: new Date(employee.DateOfBirth),
       Address: employee.Address,
       Phone: employee.Phone,
       Email: employee.Email,
@@ -40,7 +50,6 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
     id: department._id.toString(),
     name: department.DepartmentName,
   }));
-
 
   // console.log(formattedEmployee);
   // console.log(formatteddepartments);

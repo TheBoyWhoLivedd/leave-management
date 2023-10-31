@@ -16,8 +16,8 @@ export function UserMenu() {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    const res = await signOut();
-    router.replace("/");
+    // router.replace("/");
+    await signOut();
   };
 
   return (
