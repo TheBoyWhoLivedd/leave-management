@@ -1,6 +1,6 @@
 "use client";
 
-// import axios from "axios";
+import axios from "axios";
 import {
   CopyIcon,
   Pencil2Icon,
@@ -35,20 +35,22 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onConfirm = async () => {
     try {
       setLoading(true);
-      // await axios.delete(`/api/admin/partners/${data.id}`);
+      await axios.delete(`/api/employees/${data.id}`);
       router.refresh();
-      router.push(`/admin/partners`);
+      router.push(`/dashboard/employees`);
+
       toast({
         title: "Success",
         description: "Employee Deleted",
-        // action: <ToastAction altText="Goto schedule to undo">Undo</ToastAction>,
       });
     } catch (error: any) {
-      // toast.error(`Error: ${error.message}`);
+      const errorMessage =
+        error.response?.data?.message || "An unexpected error occurred.";
+      console.error(errorMessage);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: `Error: ${error.message}`,
+        description: `Error: ${errorMessage}`,
       });
     } finally {
       setLoading(false);

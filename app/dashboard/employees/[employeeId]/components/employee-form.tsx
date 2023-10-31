@@ -139,8 +139,12 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => setIsEditing((current) => !current);
+  const supervisor = supervisors.find(
+    (sup) => sup.id === initialData?.DirectSupervisor
+  );
+  const initialSupervisorName = supervisor ? supervisor.name : "";
   const [selectedSupervisorName, setSelectedSupervisorName] = useState(
-    initialData?.DirectSupervisor || ""
+    initialSupervisorName
   );
   let [PreviewImg, SetPreviewImg] = useState("");
 
@@ -163,6 +167,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         Image: "",
         DepartmentId: "",
         Password: "12345",
+        DirectSupervisor: "",
       };
 
   const form = useForm<EmployeeFormValues>({
@@ -205,21 +210,22 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      // await axios.delete(`/api/employees/${params.partnerId}`);
+      await axios.delete(`/api/employees/${params.employeeId}`);
       router.refresh();
-      router.push(`/employees`);
-      // toast.success("Partner deleted.");
+      router.push(`/dashboard/employees`);
+
       toast({
         title: "Success",
         description: "Employee Deleted",
       });
     } catch (error: any) {
-      // toast.error(`Error: ${error.message}`);
+      const errorMessage =
+        error.response?.data?.message || "An unexpected error occurred.";
+      console.error(errorMessage);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: `Error: ${error.message}`,
-        // action: <ToastAction altText="Goto schedule to undo">Retry</ToastAction>,
+        description: `Error: ${errorMessage}`,
       });
     } finally {
       setLoading(false);

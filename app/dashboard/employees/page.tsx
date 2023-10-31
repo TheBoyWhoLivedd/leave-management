@@ -8,7 +8,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 const Employees = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/server");
   }

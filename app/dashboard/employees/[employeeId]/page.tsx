@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 import React from "react";
 import { EmployeeForm } from "./components/employee-form";
 import Employee from "@/models/employee.model";
@@ -36,8 +36,9 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
       Image: employee.Image,
       DepartmentId: employee.DepartmentId.toString(),
       DirectSupervisor: employee.DirectSupervisor
-        ? `${employee.DirectSupervisor.FirstName} ${employee.DirectSupervisor.LastName}`
+        ? employee.DirectSupervisor._id.toString()
         : "",
+      
     };
   }
   const supervisors = await Employee.find({});
