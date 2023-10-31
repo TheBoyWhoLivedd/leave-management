@@ -33,6 +33,7 @@ export async function PATCH(
     LastName,
     Phone,
     Roles,
+    hasAdminRights
   } = body;
 
   try {
@@ -52,6 +53,7 @@ export async function PATCH(
           LastName,
           Phone,
           Roles,
+          hasAdminRights
         },
       },
       { new: true }

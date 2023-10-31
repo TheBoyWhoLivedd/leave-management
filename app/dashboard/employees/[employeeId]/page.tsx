@@ -38,7 +38,7 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
       DirectSupervisor: employee.DirectSupervisor
         ? employee.DirectSupervisor._id.toString()
         : "",
-      
+      hasAdminRights: employee.hasAdminRights,
     };
   }
   const supervisors = await Employee.find({});

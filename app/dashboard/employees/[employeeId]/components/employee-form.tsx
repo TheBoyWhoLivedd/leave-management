@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "@radix-ui/react-icons";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -86,6 +87,7 @@ const formSchema = z.object({
     .string({ required_error: "Phone number is required" })
     .regex(/^0\d{9}$/, { message: "Phone number format is invalid" }),
   Email: z.string().email({ message: "Invalid Email Address" }),
+  hasAdminRights: z.boolean().default(false).optional(),
 });
 
 type EmployeeFormValues = z.infer<typeof formSchema>;
@@ -111,6 +113,7 @@ export interface Employee {
   Image: string;
   DepartmentId: string;
   DirectSupervisor: string;
+  hasAdminRights: boolean;
 }
 export type Department = {
   id: string;
@@ -168,6 +171,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         DepartmentId: "",
         Password: "12345",
         DirectSupervisor: "",
+        hasAdminRights: false,
       };
 
   const form = useForm<EmployeeFormValues>({
@@ -649,6 +653,24 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
                     />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="hasAdminRights"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      // @ts-ignore
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Can User Pass?</FormLabel>
+                  </div>
                 </FormItem>
               )}
             />

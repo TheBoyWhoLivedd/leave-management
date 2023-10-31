@@ -6,6 +6,7 @@ import {
   PlusCircledIcon,
   FileIcon,
   PersonIcon,
+  CalendarIcon,
 } from "@radix-ui/react-icons";
 
 import {
@@ -24,8 +25,12 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { CustomSession } from "@/app/api/auth/[...nextauth]/options";
 
 export const SidebarRoutes = () => {
+  const { data: session } = useSession() as { data: CustomSession | null };
+  const isAdmin = session?.user?.isAdmin;
   const path = usePathname();
   console.log("Current Path: ", path);
 
@@ -44,14 +49,7 @@ export const SidebarRoutes = () => {
     }[];
   };
 
-  const routes: RouteType[] = [
-    {
-      title: "Dashboard",
-      label: "Dashboard",
-      href: "/dashboard",
-      isTitle: false,
-      icon: <ClipboardIcon />,
-    },
+  const adminRoutes: RouteType[] = [
     {
       title: "Department",
       label: "Department",
@@ -111,6 +109,16 @@ export const SidebarRoutes = () => {
         },
       ],
     },
+  ];
+
+  const commonRoutes: RouteType[] = [
+    {
+      title: "Dashboard",
+      label: "Dashboard",
+      href: "/dashboard",
+      isTitle: false,
+      icon: <ClipboardIcon />,
+    },
     {
       title: "Leave",
       label: "Leave",
@@ -147,7 +155,31 @@ export const SidebarRoutes = () => {
         },
       ],
     },
+    {
+      title: "Calendar",
+      label: "Calendar",
+      isTitle: false,
+      icon: <CalendarIcon />,
+      children: [
+        {
+          title: "My Calendar",
+          label: "My Calendar",
+          href: "/calendar/my",
+          parentKey: "Calendar",
+          icon: <CalendarIcon />,
+        },
+        {
+          title: "Department Calendar",
+          label: "Department Calendar",
+          href: "/calendar/department",
+          parentKey: "Calendar",
+          icon: <CalendarIcon />,
+        },
+      ],
+    },
   ];
+
+  const routes = isAdmin ? [...commonRoutes, ...adminRoutes] : commonRoutes;
 
   return (
     <NavigationMenu className="w-full">
