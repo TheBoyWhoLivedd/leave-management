@@ -660,16 +660,15 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
               control={form.control}
               name="hasAdminRights"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4">
                   <FormControl>
                     <Checkbox
                       checked={field.value}
-                      // @ts-ignore
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel>Can User Pass?</FormLabel>
+                    <FormLabel>Can User Pass? (IsAdmin)</FormLabel>
                   </div>
                 </FormItem>
               )}

@@ -7,11 +7,10 @@ const DepartmentSchema = new Schema(
       required: true,
       unique: true,
     },
-    DepartmentShortName: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+    // DepartmentShortName: {
+    //   type: String,
+    //   unique: true,
+    // },
     DepartmentDetails: {
       type: String,
     },

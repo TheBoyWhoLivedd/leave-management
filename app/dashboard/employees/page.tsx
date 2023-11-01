@@ -1,7 +1,7 @@
-import { EmployeesClient } from "./components/client";
+import { EmployeesClient } from "../employees/components/client";
 import { connectToDB } from "@/lib/mongoose";
 import Employee from "@/models/employee.model";
-import { EmployeeColumn } from "./components/columns";
+import { EmployeeColumn } from "../employees/components/columns";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
