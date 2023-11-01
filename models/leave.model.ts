@@ -2,7 +2,7 @@ import { model, models, Schema } from "mongoose";
 
 const LeaveSchema = new Schema(
   {
-    EmployeeId: {
+    Employee: {
       type: Schema.Types.ObjectId,
       ref: "Employee",
       required: true,
@@ -25,7 +25,7 @@ const LeaveSchema = new Schema(
       type: Date,
       required: true,
     },
-    NumOfDay: {
+    NumOfDays: {
       type: Number,
       required: true,
     },

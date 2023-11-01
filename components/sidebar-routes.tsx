@@ -31,6 +31,7 @@ import { CustomSession } from "@/app/api/auth/[...nextauth]/options";
 export const SidebarRoutes = () => {
   const { data: session } = useSession() as { data: CustomSession | null };
   const isAdmin = session?.user?.isAdmin;
+  const userRole = session?.user?.role;
   const path = usePathname();
   console.log("Current Path: ", path);
 
@@ -127,36 +128,22 @@ export const SidebarRoutes = () => {
       icon: <ClipboardIcon />,
     },
     {
-      title: "Leave",
-      label: "Leave",
+      title: "Leave Application",
+      label: "Leave Application",
       isTitle: false,
       icon: <ClipboardIcon />,
       children: [
         {
+          title: "New Leave",
+          label: "Leave List",
+          href: "/dashboard/leave/new",
+          parentKey: "Leave",
+          icon: <PlusCircledIcon />,
+        },
+        {
           title: "Leave List",
           label: "Leave List",
-          href: "/leave/leave-list",
-          parentKey: "Leave",
-          icon: <CircleIcon />,
-        },
-        {
-          title: "Leave List Pending",
-          label: "Leave List Pending",
-          href: "/leave/leave-list-pending",
-          parentKey: "Leave",
-          icon: <CircleIcon />,
-        },
-        {
-          title: "Leave List Approved",
-          label: "Leave List Approved",
-          href: "/leave/leave-list-approved",
-          parentKey: "Leave",
-          icon: <CircleIcon />,
-        },
-        {
-          title: "Leave List Rejected",
-          label: "Leave List Rejected",
-          href: "/leave/leave-list-rejected",
+          href: "/dashboard/leave",
           parentKey: "Leave",
           icon: <CircleIcon />,
         },
@@ -184,6 +171,17 @@ export const SidebarRoutes = () => {
         },
       ],
     },
+    ...(userRole !== "OFFICER"
+      ? [
+          {
+            title: "Leave Approval",
+            label: "Leave Approval",
+            href: "/dashboard/leave-approval",
+            isTitle: false,
+            icon: <ClipboardIcon />,
+          },
+        ]
+      : []),
   ];
 
   const routes = isAdmin ? [...commonRoutes, ...adminRoutes] : commonRoutes;
