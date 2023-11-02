@@ -132,6 +132,11 @@ export const LeaveForm: React.FC<LeaveFormProps> = ({
           Employee,
           path: pathname,
         });
+        // await axios.post(`/api/leave`, {
+        //   ...data,
+        //   Employee,
+        //   path: pathname,
+        // });
       }
       router.refresh();
       router.push(`/dashboard/leave`);

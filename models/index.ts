@@ -1,4 +1,5 @@
-import "./department.model"
-import "./employee.model"
-import "./leaveType.model"
-import "./leave.model"
+import "./department.model";
+import "./employee.model";
+import "./leaveType.model";
+import "./leave.model";
+import "./leaveBalance.model";

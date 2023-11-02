@@ -3,9 +3,8 @@ import { connectToDB } from "@/lib/mongoose";
 import Leave from "@/models/leave.model";
 import { getServerSession } from "next-auth";
 import { CustomSession, authOptions } from "../auth/[...nextauth]/options";
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
+import LeaveBalance from "@/models/leaveBalance.model";
 
 export async function POST(req: Request) {
   try {
@@ -16,9 +15,33 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    // console.log(body);
 
     await connectToDB();
+
+    const leaveBalance = await LeaveBalance.findOne({
+      Employee: body.Employee,
+    });
+    if (!leaveBalance) {
+      return NextResponse.json(
+        {
+          error: true,
+          message: "Leave balance not found for the employee.",
+        },
+        { status: 404 }
+      );
+    }
+
+    // Ensure the requested leave days do not exceed the available balance
+    if (body.NumOfDays > leaveBalance.Balance) {
+      return NextResponse.json(
+        {
+          error: true,
+          message: "Requested days exceed available leave balance.",
+        },
+        { status: 400 }
+      );
+    }
+
     const createdLeave = await Leave.create(body);
     revalidatePath("/dashboard/leave");
     return NextResponse.json({

@@ -4,19 +4,22 @@ import Leave from "@/models/leave.model";
 // import { LeaveColumn } from "../leaves/components/columns";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { CustomSession, authOptions } from "@/app/api/auth/[...nextauth]/options";
+import {
+  CustomSession,
+  authOptions,
+} from "@/app/api/auth/[...nextauth]/options";
 import "@/models/index";
 import { LeavesClient } from "./components/client";
 import { LeaveColumn } from "./components/columns";
 
 const Leaves = async () => {
-  const session:CustomSession | null = await getServerSession(authOptions);
+  const session: CustomSession | null = await getServerSession(authOptions);
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/server");
   }
   await connectToDB();
   const leaves = await Leave.find({ Employee: session?.user?.id })
-    .populate({path:"LeaveType", select:"LeaveTypeName"})
+    .populate({ path: "LeaveType", select: "LeaveTypeName" })
     .populate({ path: "Employee", select: "FirstName LastName" });
   console.log(leaves);
 

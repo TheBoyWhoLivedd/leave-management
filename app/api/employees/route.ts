@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectToDB } from "@/lib/mongoose";
 import Employee from "@/models/employee.model";
+import LeaveBalance from "@/models/leaveBalance.model";
 import { getServerSession } from "next-auth";
 import { CustomSession, authOptions } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
@@ -39,8 +40,13 @@ export async function POST(req: Request) {
     const saltRounds = 10;
     body.Password = bcrypt.hashSync(body.Password, saltRounds);
 
-    connectToDB();
+    await connectToDB();
     const createdEmployee = await Employee.create(body);
+    const newBalance = new LeaveBalance({
+      Employee: createdEmployee._id,
+      Balance: 20,
+    });
+    await newBalance.save();
     revalidatePath("/dashboard/employees");
     return NextResponse.json({
       employee: createdEmployee.FirstName,

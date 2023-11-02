@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { CustomSession, authOptions } from "../../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import Leave from "@/models/leave.model";
+import LeaveBalance from "@/models/leaveBalance.model";
 
 export async function PATCH(
   req: Request,
@@ -40,6 +41,29 @@ export async function PATCH(
         {
           error: true,
           message: "Only leaves with status 'Pending' can be updated.",
+        },
+        { status: 400 }
+      );
+    }
+
+    const leaveBalance = await LeaveBalance.findOne({
+      Employee: body.Employee,
+    });
+    if (!leaveBalance) {
+      return NextResponse.json(
+        {
+          error: true,
+          message: "Leave balance not found for the employee.",
+        },
+        { status: 404 }
+      );
+    }
+
+    if (NumOfDays > leaveBalance.Balance) {
+      return NextResponse.json(
+        {
+          error: true,
+          message: "Requested days exceed available leave balance.",
         },
         { status: 400 }
       );

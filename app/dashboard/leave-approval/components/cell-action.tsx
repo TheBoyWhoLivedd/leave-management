@@ -6,6 +6,8 @@ import {
   Pencil2Icon,
   DotsHorizontalIcon,
   TrashIcon,
+  CheckIcon,
+  Cross2Icon,
 } from "@radix-ui/react-icons";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -32,16 +34,14 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams();
 
   const { toast } = useToast();
-  const onConfirm = async () => {
+  const onDecision = async (approve: boolean) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/leave/${data.id}`);
+      await axios.patch(`/api/leave-approval/${data.id}`, { approve });
       router.refresh();
-      router.push(`/dashboard/leave`);
-
       toast({
         title: "Success",
-        description: "Leave Deleted",
+        description: approve ? "Leave Approved" : "Leave Rejected",
       });
     } catch (error: any) {
       const errorMessage =
@@ -54,7 +54,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       });
     } finally {
       setLoading(false);
-      setOpen(false);
     }
   };
 
@@ -73,7 +72,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onConfirm}
+        onConfirm={() => onDecision(false)}
         loading={loading}
       />
       {isPending ? (
@@ -89,13 +88,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <DropdownMenuItem onClick={() => onCopy(data.id)}>
               <CopyIcon className="mr-2 h-4 w-4" /> Copy Id
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => router.push(`/dashboard/leave/${data.id}`)}
-            >
-              <Pencil2Icon className="mr-2 h-4 w-4" /> Update
+            <DropdownMenuItem onClick={() => onDecision(true)}>
+              <CheckIcon className="mr-2 h-4 w-4" /> Approve
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setOpen(true)}>
-              <TrashIcon className="mr-2 h-4 w-4" /> Delete
+              <Cross2Icon className="mr-2 h-4 w-4" /> Reject
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

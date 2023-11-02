@@ -2,6 +2,21 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { Badge } from "@/components/ui/badge";
 
+export const statuses = [
+  {
+    value: "Accepted",
+    label: "Accepted",
+  },
+  {
+    value: "Rejected",
+    label: "Rejected",
+  },
+  {
+    value: "Pending",
+    label: "Pending",
+  },
+];
+
 export type LeaveColumn = {
   id: string;
   name: string;
@@ -29,10 +44,20 @@ export const leaveColumns: ColumnDef<LeaveColumn>[] = [
     header: "Days",
   },
   {
-    accessorKey: "Status",
+    accessorKey: "status",
     header: "Status",
 
     cell: ({ row }) => {
+      // const status = statuses.find(
+      //   (stat) => stat.value === row.original.status
+      // );
+      const status = statuses.find(
+        (status) => status.value === row.getValue("status")
+      );
+      // console.log(row.original.status);
+      if (!status) {
+        return null;
+      }
       let badgeVariant:
         | "default"
         | "secondary"
@@ -53,9 +78,13 @@ export const leaveColumns: ColumnDef<LeaveColumn>[] = [
           badgeVariant = "default";
           break;
       }
-      return <Badge variant={badgeVariant}>{row.original.status}</Badge>;
+      return <Badge variant={badgeVariant}>{status.label}</Badge>;
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
+
   {
     id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,
