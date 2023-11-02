@@ -328,7 +328,7 @@ export const LeaveForm: React.FC<LeaveFormProps> = ({
                 <FormItem>
                   <FormLabel>Num of Days</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="2" {...field} />
+                    <Input disabled={loading||true} placeholder="2" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

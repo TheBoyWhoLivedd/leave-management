@@ -150,26 +150,11 @@ export const SidebarRoutes = () => {
       ],
     },
     {
-      title: "Calendar",
-      label: "Calendar",
+      title: "Department Calendar",
+      label: "Department Calendar",
+      href: "/dashboard/calendar",
       isTitle: false,
       icon: <CalendarIcon />,
-      children: [
-        {
-          title: "My Calendar",
-          label: "My Calendar",
-          href: "/calendar/my",
-          parentKey: "Calendar",
-          icon: <CalendarIcon />,
-        },
-        {
-          title: "Department Calendar",
-          label: "Department Calendar",
-          href: "/calendar/department",
-          parentKey: "Calendar",
-          icon: <CalendarIcon />,
-        },
-      ],
     },
     ...(userRole !== "OFFICER"
       ? [
