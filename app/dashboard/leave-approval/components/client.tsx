@@ -24,9 +24,6 @@ export const LeaveApprovalApprovalClient: React.FC<
           title={`Leave Approvals  (${data.length})`}
           description="Approve or Reject your Subordinate's Leave"
         />
-        <Button onClick={() => router.push(`/dashboard/leave/new`)}>
-          <PlusIcon className="mr-2 h-4 w-4" /> Add New
-        </Button>
       </div>
       <Separator />
       <DataTable searchKey="name" columns={leaveApprovalColumns} data={data} />

@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Leave {
   _id: string;
@@ -42,11 +43,13 @@ interface EmployeeData {
 interface CalendarNavigationProps {
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+  loading: boolean;
 }
 
 function CalendarNavigation({
   currentDate,
   setCurrentDate,
+  loading,
 }: CalendarNavigationProps) {
   const goToNextMonth = () => {
     setCurrentDate(
@@ -62,12 +65,16 @@ function CalendarNavigation({
 
   return (
     <div className="flex flex-row gap-2 items-center">
-      <Button variant="outline" onClick={goToPreviousMonth}>Previous</Button>
+      <Button disabled={loading} variant="outline" onClick={goToPreviousMonth}>
+        Previous
+      </Button>
       <span>
         {currentDate.toLocaleString("default", { month: "long" })}{" "}
         {currentDate.getFullYear()}
       </span>
-      <Button variant="outline" onClick={goToNextMonth}>Next</Button>
+      <Button disabled={loading} variant="outline" onClick={goToNextMonth}>
+        Next
+      </Button>
     </div>
   );
 }
@@ -143,8 +150,10 @@ interface ProcessedEmployeeData extends EmployeeData {
 export default function CalendarClient() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [leaveData, setLeaveData] = useState<ProcessedEmployeeData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     // Fetch data from the API using the currentDate
     fetch(
       `/api/calendar?month=${
@@ -168,8 +177,12 @@ export default function CalendarClient() {
           }
         );
         setLeaveData(processedData);
+        setIsLoading(false);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setIsLoading(false);
+      });
   }, [currentDate]);
 
   const daysInMonth = new Date(
@@ -182,6 +195,7 @@ export default function CalendarClient() {
       <CalendarNavigation
         currentDate={currentDate}
         setCurrentDate={setCurrentDate}
+        loading={isLoading}
       />
       <Table>
         <TableHeader>
@@ -190,7 +204,10 @@ export default function CalendarClient() {
               style={{ textAlign: "center" }}
               colSpan={daysInMonth + 1}
             >
-              {currentDate.toDateString()}
+              {currentDate.toLocaleDateString("default", {
+                month: "long",
+                year: "numeric",
+              })}
             </TableHead>
           </TableRow>
           <TableRow>
@@ -215,24 +232,37 @@ export default function CalendarClient() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {leaveData.map((employee) => (
-            <TableRow key={employee.name}>
-              <TableCell>{employee.name}</TableCell>
-              {[...Array(daysInMonth)].map((_, idx) => {
-                const status = employee.dailyStatus[idx + 1];
-                const prevStatus = employee.dailyStatus[idx];
-                const nextStatus = employee.dailyStatus[idx + 2];
-                const isFirst = status !== prevStatus;
-                const isLast = status !== nextStatus;
-                return (
-                  <TableCell
-                    key={idx}
-                    style={getStatusStyles(status, isFirst, isLast)}
-                  ></TableCell>
-                );
-              })}
-            </TableRow>
-          ))}
+          {isLoading
+            ? [...Array(10)].map((_, rowIdx) => (
+                <TableRow key={rowIdx}>
+                  <TableCell>
+                    <Skeleton className="h-4 w-24" />
+                  </TableCell>
+                  {[...Array(daysInMonth)].map((_, cellIdx) => (
+                    <TableCell key={cellIdx} className="p-0">
+                      <Skeleton className="h-4 w-full rounded-none" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            : leaveData.map((employee) => (
+                <TableRow key={employee.name}>
+                  <TableCell>{employee.name}</TableCell>
+                  {[...Array(daysInMonth)].map((_, idx) => {
+                    const status = employee.dailyStatus[idx + 1];
+                    const prevStatus = employee.dailyStatus[idx];
+                    const nextStatus = employee.dailyStatus[idx + 2];
+                    const isFirst = status !== prevStatus;
+                    const isLast = status !== nextStatus;
+                    return (
+                      <TableCell
+                        key={idx}
+                        style={getStatusStyles(status, isFirst, isLast)}
+                      ></TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
         </TableBody>
       </Table>
     </div>
