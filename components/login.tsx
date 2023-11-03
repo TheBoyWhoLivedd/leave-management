@@ -18,6 +18,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -26,6 +33,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
+
 
 const loginSchema = z.object({
   Email: z.string().email({ message: "Invalid Email Address" }),
@@ -62,6 +70,7 @@ export default function Login() {
         callbackUrl: "/dashboard",
         redirect: false,
       });
+
 
       // if (!res) {
       //   toast({
@@ -114,7 +123,7 @@ export default function Login() {
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="Email"
                 render={({ field }) => (
@@ -127,6 +136,50 @@ export default function Login() {
                         {...field}
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> */}
+              <FormField
+                control={form.control}
+                name="Email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email Address</FormLabel>
+                    <Select
+                      disabled={false}
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            defaultValue={field.value}
+                            placeholder="Officer?"
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {[
+                          "jodong@ura.go.ug",
+                          "gkizito@ura.go.ug",
+                          "copio@ura.go.ug",
+                          "mtusingwire@ura.go.ug",
+                          "jkansiime@ura.go.ug",
+                          "mkwagondeze@ura.go.ug",
+                          "oogwal@ura.go.ug",
+                          "rssembogga@ura.go.ug",
+                          "rayesigwa@ura.go.ug",
+                          "doluge@ura.go.ug",
+                          "admin@example.com",
+                        ].map((gender, index) => (
+                          <SelectItem key={index} value={gender}>
+                            <div className="flex items-center">{gender}</div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
