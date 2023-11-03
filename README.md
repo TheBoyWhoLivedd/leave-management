@@ -39,7 +39,7 @@ The application's routes are organized into admin-specific and common routes:
 
 Before running the project, ensure that you have the following environment variables set up:
 
-\```env
+```js
 MONGODB_URL=
 APP_URL=
 NEXTAUTH_URL=
@@ -52,11 +52,11 @@ EMAIL_FROM=
 SMTP_SECURE=false
 UPLOADTHING_SECRET=
 UPLOADTHING_APP_ID=
-\```
+```
 
 ### Installation
 
-\```js
+```js
 git clone [your-repo-link]
 cd [your-repo-directory]
 npm install
@@ -72,11 +72,11 @@ pnpm install
 # or
 
 bun install
-\```
+```
 
 Then run the development server:
 
-\```js
+```js
 npm run dev
 
 # or
@@ -90,7 +90,7 @@ pnpm dev
 # or
 
 bun dev
-\```
+```
 
 Open `http://localhost:3000` with your browser to see the result.
 
