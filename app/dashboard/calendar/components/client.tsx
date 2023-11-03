@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 
 interface Leave {
   _id: string;
@@ -125,10 +126,10 @@ const getStatusStyles = (
       styles.backgroundColor = "gray";
       break;
     case "Rejected":
-      styles.backgroundColor = "red";
+      styles.backgroundColor = "#7F1D1D";
       break;
     case "Accepted":
-      styles.backgroundColor = "green";
+      styles.backgroundColor = "#22C55E";
       break;
     default:
       break;
@@ -197,6 +198,24 @@ export default function CalendarClient() {
         setCurrentDate={setCurrentDate}
         loading={isLoading}
       />
+      <div>
+        {["Pending", "Rejected", "Accepted"].map((status, index) => (
+          <Badge
+            className="mr-2"
+            key={index}
+            variant={
+              status === "Accepted"
+                ? "accepted"
+                : status === "Rejected"
+                ? "destructive"
+                : "default"
+            }
+          >
+            {status}
+          </Badge>
+        ))}
+      </div>
+
       <Table>
         <TableHeader>
           <TableRow>

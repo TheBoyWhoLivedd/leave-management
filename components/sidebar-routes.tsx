@@ -135,14 +135,14 @@ export const SidebarRoutes = () => {
       children: [
         {
           title: "New Leave",
-          label: "Leave List",
+          label: "New Leave",
           href: "/dashboard/leave/new",
           parentKey: "Leave",
           icon: <PlusCircledIcon />,
         },
         {
-          title: "Leave List",
-          label: "Leave List",
+          title: "Leave History",
+          label: "Leave History",
           href: "/dashboard/leave",
           parentKey: "Leave",
           icon: <CircleIcon />,
