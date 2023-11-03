@@ -112,8 +112,19 @@ export const LeaveForm: React.FC<LeaveFormProps> = ({
 
   useEffect(() => {
     if (startDate && endDate) {
-      const daysDifference = differenceInCalendarDays(endDate, startDate) + 1;
-      setValue("NumOfDays", daysDifference);
+      let numOfWorkingDays = 0;
+      let currentDate = new Date(startDate);
+
+      while (currentDate <= endDate) {
+        const dayOfWeek = currentDate.getDay();
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+          // This is not a weekend day
+          numOfWorkingDays++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      setValue("NumOfDays", numOfWorkingDays);
     }
   }, [startDate, endDate, setValue]);
 
@@ -328,7 +339,11 @@ export const LeaveForm: React.FC<LeaveFormProps> = ({
                 <FormItem>
                   <FormLabel>Num of Days</FormLabel>
                   <FormControl>
-                    <Input disabled={loading||true} placeholder="2" {...field} />
+                    <Input
+                      disabled={loading || true}
+                      placeholder="2"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
