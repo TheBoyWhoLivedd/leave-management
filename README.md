@@ -56,7 +56,7 @@ UPLOADTHING_APP_ID=
 
 ### Installation
 
-\```sh
+\```js
 git clone [your-repo-link]
 cd [your-repo-directory]
 npm install
@@ -76,7 +76,7 @@ bun install
 
 Then run the development server:
 
-\```sh
+\```js
 npm run dev
 
 # or
