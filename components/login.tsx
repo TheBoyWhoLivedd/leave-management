@@ -34,7 +34,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 
-
 const loginSchema = z.object({
   Email: z.string().email({ message: "Invalid Email Address" }),
   Password: z.string().min(1, { message: "Password is required" }),
@@ -54,7 +53,7 @@ export default function Login() {
 
   const form = useForm<LoginFormValues>({
     defaultValues: {
-      Email: "admin@example.com",
+      Email: "oogwal@ura.go.ug",
       Password: "12345",
     },
     resolver: zodResolver(loginSchema),
@@ -70,7 +69,6 @@ export default function Login() {
         callbackUrl: "/dashboard",
         redirect: false,
       });
-
 
       // if (!res) {
       //   toast({

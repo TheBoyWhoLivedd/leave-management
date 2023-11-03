@@ -52,21 +52,21 @@ export const SidebarRoutes = () => {
 
   const adminRoutes: RouteType[] = [
     {
-      title: "Department",
-      label: "Department",
+      title: "Division",
+      label: "Division",
       isTitle: false,
       icon: <FileIcon />,
       children: [
         {
-          title: "NewDepartment",
-          label: "New Department",
+          title: "New Division",
+          label: "New Division",
           href: "/dashboard/departments/new",
           parentKey: "Department",
           icon: <PlusCircledIcon />,
         },
         {
-          title: "DepartmentList",
-          label: "Department List",
+          title: "Division List",
+          label: "Division List",
           href: "/dashboard/departments",
           parentKey: "Department",
           icon: <CircleIcon />,
