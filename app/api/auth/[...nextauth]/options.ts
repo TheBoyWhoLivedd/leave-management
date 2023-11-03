@@ -81,6 +81,7 @@ export const authOptions: AuthOptions = {
             role: user.Roles,
             email: user.Email,
             isAdmin: user.hasAdminRights,
+            avatar: user.Image,
           };
         } catch (error) {
           console.log("Error: ", error);
