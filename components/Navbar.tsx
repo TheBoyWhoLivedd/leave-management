@@ -29,8 +29,8 @@ export const Navbar = () => {
             <Button variant="ghost">Dashboard</Button>
           </Link>
         )} */}
-        <UserMenu />
         <ModeToggle />
+        <UserMenu />
       </div>
     </div>
   );

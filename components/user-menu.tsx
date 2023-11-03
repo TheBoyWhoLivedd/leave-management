@@ -10,18 +10,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { CustomSession } from "@/app/api/auth/[...nextauth]/options";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function UserMenu() {
-  const router = useRouter();
-
   const { data: session } = useSession() as { data: CustomSession | null };
 
   const handleSignOut = async () => {
-    // router.replace("/");
-    await signOut();
+    await signOut({ callbackUrl: "/" });
   };
 
   return (
@@ -30,7 +26,7 @@ export function UserMenu() {
         <Button
           variant="outline"
           size="default"
-          className=" h-13 flex items-center space-x-2 border-gray-300 text-gray-700 hover:border-gray-400 "
+          className=" h-13 flex items-center space-x-2 "
         >
           <Avatar className="shrink-0">
             <AvatarImage
