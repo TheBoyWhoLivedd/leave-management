@@ -57,11 +57,13 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
   // console.log(formattedSupervisors);
 
   return (
-    <EmployeeForm
-      initialData={formattedEmployee}
-      departments={formatteddepartments}
-      supervisors={formattedSupervisors}
-    />
+    <div className="p-2 md:p-6">
+      <EmployeeForm
+        initialData={formattedEmployee}
+        departments={formatteddepartments}
+        supervisors={formattedSupervisors}
+      />
+    </div>
   );
 };
 

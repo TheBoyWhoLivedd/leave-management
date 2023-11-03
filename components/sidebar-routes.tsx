@@ -150,8 +150,8 @@ export const SidebarRoutes = () => {
       ],
     },
     {
-      title: "Department Calendar",
-      label: "Department Calendar",
+      title: "Leave Planner",
+      label: "Leave Planner",
       href: "/dashboard/calendar",
       isTitle: false,
       icon: <CalendarIcon />,

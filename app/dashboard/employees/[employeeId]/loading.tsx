@@ -4,39 +4,60 @@ import { Separator } from "@/components/ui/separator";
 const Loading = () => {
   return (
     <div className="space-y-6 w-full px-6 pt-6">
-      {/* Heading and Button */}
-      <div className="flex items-center justify-between">
+      {/* Heading */}
+      <div className="flex flex-col space-y-2">
+        <Skeleton className="h-4 w-[200px]" />
+        <Skeleton className="h-3 w-[300px]" />
+      </div>
+
+      {/* Employee Image */}
+      <div className="flex items-center space-x-4">
+        <Skeleton className="h-60 w-60 rounded-md" />
         <div className="space-y-2">
           <Skeleton className="h-4 w-[150px]" />
-          <Skeleton className="h-3 w-[250px]" />
+          <Skeleton className="h-4 w-[250px]" />
         </div>
-        <Skeleton className="h-8 w-8 rounded-md" />
       </div>
 
       <Separator />
 
       {/* Form Skeleton */}
-      <div className="space-y-8 w-full">
-        <div className="md:grid md:grid-cols-3 gap-8">
-          {/* Category name input */}
-          <div className="flex flex-col space-y-2">
-            <Skeleton className="h-4 w-[70px]" />
-            <Skeleton className="h-8 w-full" />
-          </div>
-
-          {/* Billboard select */}
-          <div className="flex flex-col space-y-2">
-            <Skeleton className="h-4 w-[80px]" />
-            <div className="relative rounded-md">
-              <Skeleton className="h-8 w-full" />
-              <Skeleton className="absolute top-1/2 right-3 h-5 w-5 transform -translate-y-1/2" />
+      <div className="space-y-6 w-full">
+        <div className="md:grid md:grid-cols-2 gap-6">
+          {/* Department, First Name, Email, Role */}
+          {[...Array(4)].map((_, idx) => (
+            <div key={idx} className="flex flex-col space-y-2">
+              <Skeleton className="h-4 w-[100px]" />
+              <Skeleton className="h-8 w-full rounded-md" />
             </div>
+          ))}
+
+          {/* Last Name, Gender, Phone, Address */}
+          {[...Array(4)].map((_, idx) => (
+            <div key={idx} className="flex flex-col space-y-2">
+              <Skeleton className="h-4 w-[100px]" />
+              <Skeleton className="h-8 w-full rounded-md" />
+            </div>
+          ))}
+
+          {/* Default Password, Supervisor, Date of Birth */}
+          {[...Array(3)].map((_, idx) => (
+            <div key={idx} className="flex flex-col space-y-2">
+              <Skeleton className="h-4 w-[100px]" />
+              <Skeleton className="h-8 w-full rounded-md" />
+            </div>
+          ))}
+
+          {/* Checkbox */}
+          <div className="flex items-center space-x-3">
+            <Skeleton className="h-5 w-5" />
+            <Skeleton className="h-4 w-[200px]" />
           </div>
         </div>
 
         {/* Submit button */}
-        <div className="flex justify-start">
-          <Skeleton className="h-10 w-[120px]" />
+        <div className="flex justify-start mt-6">
+          <Skeleton className="h-10 w-[120px] rounded-md" />
         </div>
       </div>
     </div>
