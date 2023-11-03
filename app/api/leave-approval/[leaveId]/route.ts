@@ -53,6 +53,16 @@ export async function PATCH(
           { status: 404 }
         );
       }
+      if (leaveBalance.Balance < existingLeave.NumOfDays) {
+        return NextResponse.json(
+          {
+            error: true,
+            message:
+              "Can't approve leave as it exceeds employee's leave balance",
+          },
+          { status: 404 }
+        );
+      }
       leaveBalance.Balance -= existingLeave.NumOfDays;
       await leaveBalance.save();
     }

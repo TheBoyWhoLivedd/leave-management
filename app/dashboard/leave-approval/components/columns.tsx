@@ -20,7 +20,7 @@ export const leaveApprovalColumns: ColumnDef<LeaveApprovalColumn>[] = [
   },
   {
     accessorKey: "leaveType",
-    header: "LeaveApproval Type",
+    header: "Leav Approval Type",
   },
   {
     accessorKey: "date",
