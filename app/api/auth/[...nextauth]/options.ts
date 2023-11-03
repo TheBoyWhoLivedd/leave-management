@@ -84,7 +84,7 @@ export const authOptions: AuthOptions = {
             avatar: user.Image,
           };
         } catch (error) {
-          console.log("Error: ", error);
+          //console.log("Error: ", error);
           return null;
         }
       },

@@ -15,7 +15,7 @@ const Departments = async () => {
   }
   await connectToDB();
   const departments = await Department.find();
-  // console.log(departments);
+  //console.log(departments);
 
   const formattedDepartments: DepartmentColumn[] = departments.map(
     (department) => ({

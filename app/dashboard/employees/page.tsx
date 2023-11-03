@@ -13,7 +13,7 @@ const Employees = async () => {
   }
   await connectToDB();
   const employees = await Employee.find();
-  // console.log(employees);
+  //console.log(employees);
 
   const formattedEmployees: EmployeeColumn[] = employees.map((employee) => ({
     id: employee._id.toString(),

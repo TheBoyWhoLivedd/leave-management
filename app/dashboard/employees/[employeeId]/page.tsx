@@ -52,9 +52,9 @@ const page = async ({ params }: { params: { employeeId: string } }) => {
     name: department.DepartmentName,
   }));
 
-  // console.log(formattedEmployee);
-  // console.log(formatteddepartments);
-  // console.log(formattedSupervisors);
+  //console.log(formattedEmployee);
+  //console.log(formatteddepartments);
+  //console.log(formattedSupervisors);
 
   return (
     <div className="p-2 md:p-6">

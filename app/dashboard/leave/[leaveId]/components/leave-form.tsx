@@ -137,7 +137,7 @@ export const LeaveForm: React.FC<LeaveFormProps> = ({
           Employee,
         });
       } else {
-        console.log(data);
+        //console.log(data);
         await axios.post(`/api/leave`, {
           ...data,
           Employee,

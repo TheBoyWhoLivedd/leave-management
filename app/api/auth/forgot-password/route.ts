@@ -33,7 +33,6 @@ export async function POST(request: NextRequest) {
   user.password_reset_token = randomStr;
   await user.save();
 
-
   // * Encrypt user email
   const crypt = new Cryptr(Env.SECRET_KEY);
   const encryptedEmail = crypt.encrypt(user.Email);
@@ -57,7 +56,7 @@ export async function POST(request: NextRequest) {
       message: "Email sent successfully.please check your email.",
     });
   } catch (error) {
-    console.log("the error is", error);
+    //console.log("the error is", error);
     return NextResponse.json({
       status: 500,
       message: "Something went wrong.please try again!",

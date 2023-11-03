@@ -20,7 +20,7 @@ export default function MagicLinkLogin({
       })
       .then((res) => {
         const response = res.data;
-        console.log("The response is ", response);
+        //console.log("The response is ", response);
         if (response.status == 200) {
           toast({
             title: "Success",
@@ -42,7 +42,7 @@ export default function MagicLinkLogin({
         }
       })
       .catch((err) => {
-        console.log("The error is", err);
+        //console.log("The error is", err);
       });
   }, []);
 

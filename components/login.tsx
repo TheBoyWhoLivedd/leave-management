@@ -60,22 +60,22 @@ export default function Login() {
         Email,
         Password,
         callbackUrl: "/dashboard",
-        redirect: true,
+        redirect: false,
       });
 
-      if (!res) {
-        toast({
-          title: "Error",
-          description: "Unknown error occurred",
-          variant: "destructive",
-        });
-        return;
-      }
+      // if (!res) {
+      //   toast({
+      //     title: "Error",
+      //     description: "Unknown error occurred",
+      //     variant: "destructive",
+      //   });
+      //   return;
+      // }
 
-      console.log(res);
+      //console.log("res", res);
 
-      if (!res.ok) {
-        console.log(res.error);
+      if (!res?.ok) {
+        //console.log(res?.error);
         toast({
           title: "Unauthorized",
           description: "Invalid credentials",
@@ -90,7 +90,7 @@ export default function Login() {
       });
       router.replace("dashboard");
     } catch (error: any) {
-      console.log(error);
+      //console.log(error);
       toast({
         title: "Error",
         description: error.message || "An error occurred",

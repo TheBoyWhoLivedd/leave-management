@@ -33,7 +33,7 @@ export const SidebarRoutes = () => {
   const isAdmin = session?.user?.isAdmin;
   const userRole = session?.user?.role;
   const path = usePathname();
-  console.log("Current Path: ", path);
+  //console.log("Current Path: ", path);
 
   type RouteType = {
     title: string;

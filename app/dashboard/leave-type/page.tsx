@@ -15,7 +15,7 @@ const LeaveTypes = async () => {
   }
   await connectToDB();
   const leaveTypes = await LeaveType.find();
-  // console.log(leaveTypes);
+  //console.log(leaveTypes);
 
   const formattedLeaveTypes: LeaveTypeColumn[] = leaveTypes.map(
     (leaveType) => ({

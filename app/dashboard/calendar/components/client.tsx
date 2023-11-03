@@ -86,6 +86,7 @@ function getDailyStatusForEmployee(
   month: number,
   year: number
 ): DailyStatus {
+  //console.log(leaves)
   const endDate = new Date(year, month, 0);
   const dailyStatus: DailyStatus = {};
 
@@ -106,7 +107,7 @@ function getDailyStatusForEmployee(
       dailyStatus[day] = leave.AdminStatus;
     }
   });
-
+  //console.log(dailyStatus)
   return dailyStatus;
 }
 

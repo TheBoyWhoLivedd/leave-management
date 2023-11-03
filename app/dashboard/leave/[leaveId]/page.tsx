@@ -39,9 +39,9 @@ const page = async ({ params }: { params: { leaveId: string } }) => {
     name: leaveType.LeaveTypeName,
   }));
 
-  // console.log(formattedLeave);
-  // console.log(formattedleaveTypes);
-  // console.log(formattedSupervisors);
+   //console.log(formattedLeave);
+   //console.log(formattedleaveTypes);
+   //console.log(formattedSupervisors);
 
   return (
     <div className="p-2 md:p-6">

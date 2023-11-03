@@ -30,8 +30,8 @@ const page = async ({ params }: { params: { leaveTypeId: string } }) => {
     };
   }
 
-  // console.log(formattedLeaveType);
-  // console.log(formattedleaveTypes);
+  //console.log(formattedLeaveType);
+  //console.log(formattedleaveTypes);
 
   return (
     <div className="p-2 md:p-6">

@@ -6,7 +6,7 @@ import LeaveBalance from "@/models/leaveBalance.model";
 
 const page = async () => {
   const session: CustomSession | null = await getServerSession(authOptions);
-  console.log(session);
+  //console.log(session);
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/server");
   }

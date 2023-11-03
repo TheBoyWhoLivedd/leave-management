@@ -57,10 +57,7 @@ export default function ForgotPassword() {
               <span className="text-red-500">{errors?.email}</span>
             </div>
             <div className="mt-5">
-              <Button
-                className="w-full"
-                disabled={loading}
-              >
+              <Button className="w-full" disabled={loading}>
                 {loading ? "Processing" : "Submit"}
               </Button>
             </div>

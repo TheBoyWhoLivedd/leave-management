@@ -80,7 +80,7 @@ export const LeaveTypeForm: React.FC<LeaveTypeFormProps> = ({
       if (initialData) {
         await axios.patch(`/api/leave-type/${params.leaveTypeId}`, data);
       } else {
-        console.log(data);
+        //console.log(data);
         await axios.post(`/api/leave-type`, {
           ...data,
           path: pathname,

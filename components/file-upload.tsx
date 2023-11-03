@@ -28,7 +28,7 @@ export const FileUpload = ({ onChange, endpoint }: FileUploadProps) => {
           );
           if (button) {
             button.classList.remove("text-white");
-            console.log("Removed 'text-white' class from the button");
+            //console.log("Removed 'text-white' class from the button");
 
             // Optionally, disconnect the observer if you want to stop observing after the first match
             observer.disconnect();

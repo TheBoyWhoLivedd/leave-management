@@ -22,12 +22,12 @@ export default function SignUp() {
 
   const submitForm = async () => {
     setLoading(true);
-    console.log("The payload is", userState);
+    //console.log("The payload is", userState);
     axios
       .post("/api/auth/register", userState)
       .then((res) => {
         setLoading(false);
-        console.log("The response is", res.data);
+        //console.log("The response is", res.data);
         const response = res.data;
         if (response.status == 200) {
           router.push(`/login?message=${response.msg}`);

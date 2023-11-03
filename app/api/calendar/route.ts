@@ -11,7 +11,7 @@ export async function GET(req: Request) {
   if (!session) {
     return new NextResponse("Unauthenticated", { status: 403 });
   }
-  console.log(req.url);
+  //console.log(req.url);
   await connectToDB();
 
   try {

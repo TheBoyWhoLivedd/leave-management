@@ -21,7 +21,7 @@ const Leaves = async () => {
   const leaves = await Leave.find({ Employee: session?.user?.id })
     .populate({ path: "LeaveType", select: "LeaveTypeName" })
     .populate({ path: "Employee", select: "FirstName LastName" });
-  console.log(leaves);
+  //console.log(leaves);
 
   const formattedLeaves: LeaveColumn[] = leaves.map((leave) => ({
     id: leave._id.toString(),

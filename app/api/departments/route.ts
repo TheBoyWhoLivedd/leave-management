@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    console.log(body);
+    //console.log(body);
 
     connectToDB();
     const createdDepartment = await Department.create(body);

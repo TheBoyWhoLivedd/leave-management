@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 
-
 export default function MagicLink() {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
@@ -45,7 +44,6 @@ export default function MagicLink() {
 
   return (
     <>
-
       <div className="h-screen w-screen flex justify-center items-center">
         <div className="w-[500px] rounded-lg shadow-md p-5">
           <h1 className="font-bold text-2xl">Magic Link</h1>

@@ -30,8 +30,8 @@ const page = async ({ params }: { params: { departmentId: string } }) => {
     };
   }
 
-  // console.log(formattedDepartment);
-  // console.log(formatteddepartments);
+  //console.log(formattedDepartment);
+  //console.log(formatteddepartments);
 
   return (
     <div className="p-2 md:p-6">

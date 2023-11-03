@@ -13,8 +13,7 @@ const Employees = async () => {
   }
   await connectToDB();
   const employees = await Employee.find();
-  // console.log(employees);
-
+   //console.log(employees);
 
   return (
     <div className="p-4">

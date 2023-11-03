@@ -185,7 +185,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
       if (initialData) {
         await axios.patch(`/api/employees/${params.employeeId}`, data);
       } else {
-        console.log(data);
+        //console.log(data);
         await axios.post(`/api/employees`, {
           ...data,
           path: pathname,

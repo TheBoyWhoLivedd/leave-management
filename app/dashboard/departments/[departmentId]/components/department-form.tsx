@@ -82,7 +82,7 @@ export const DepartmentForm: React.FC<DepartmentFormProps> = ({
       if (initialData) {
         await axios.patch(`/api/departments/${params.departmentId}`, data);
       } else {
-        console.log(data);
+        //console.log(data);
         await axios.post(`/api/departments`, {
           ...data,
           path: pathname,

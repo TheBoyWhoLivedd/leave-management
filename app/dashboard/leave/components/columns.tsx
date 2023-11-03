@@ -54,7 +54,7 @@ export const leaveColumns: ColumnDef<LeaveColumn>[] = [
       const status = statuses.find(
         (status) => status.value === row.getValue("status")
       );
-      // console.log(row.original.status);
+      //console.log(row.original.status);
       if (!status) {
         return null;
       }
