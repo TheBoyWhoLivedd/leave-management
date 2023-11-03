@@ -45,9 +45,6 @@ export function UserMenu() {
         <DropdownMenuItem>
           <Link href="/dashboard/settings">Settings</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/dashboard/profile">Profile</Link>
-        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
             handleSignOut();
