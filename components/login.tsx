@@ -166,6 +166,7 @@ export default function Login() {
                           "mtusingwire@ura.go.ug",
                           "jkansiime@ura.go.ug",
                           "mkwagondeze@ura.go.ug",
+                          "cnampijja@ura.go.ug",
                           "oogwal@ura.go.ug",
                           "rssembogga@ura.go.ug",
                           "rayesigwa@ura.go.ug",
