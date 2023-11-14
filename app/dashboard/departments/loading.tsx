@@ -3,7 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const Loading = () => {
+const DepartmentsTableLoading = () => {
   return (
     <div className="flex flex-col space-y-8 p-6 w-full">
       {/* Heading, Search Bar, and Add New Button */}
@@ -38,4 +38,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default DepartmentsTableLoading;

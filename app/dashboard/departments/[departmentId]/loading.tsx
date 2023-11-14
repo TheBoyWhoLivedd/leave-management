@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 
-const Loading = () => {
+const DepartmentsFormLoading = () => {
   return (
     <div className="space-y-6 w-full px-6 pt-6">
       {/* Heading */}
@@ -80,4 +80,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default DepartmentsFormLoading;
